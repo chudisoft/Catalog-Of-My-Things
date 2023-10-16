@@ -133,6 +133,12 @@ Example command:
 - Twitter: [@twitterhandle](https://twitter.com/chrisuduekwe)
 - LinkedIn: [LinkedIn](https://linkedin.com/in/chudisoft)
 
+👤 **IKONDE NEKEMIAH ARNOLD**
+
+- GitHub: [@githubhandle](https://github.com/arnoldnekemiah/)
+- Twitter: [@twitterhandle](https://twitter.com/arnoldikonde)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/arnoldnekemiah/)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
