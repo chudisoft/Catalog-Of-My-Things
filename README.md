@@ -89,7 +89,7 @@ Clone this repository to your desired folder:
 
 ```sh
   cd my-folder
-  git clone https://github.com/Mahdi-Niazi/Catalog-Of-My-Things .git
+  git clone https://github.com/Chudisoft/Catalog-Of-My-Things.git
 ```
 
 ### Install
