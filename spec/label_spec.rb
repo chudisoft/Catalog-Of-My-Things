@@ -7,7 +7,7 @@ describe Label do
   let(:item) { Item.new(1, Date.new(2020, 1, 1)) }
 
   it 'initializes with a name and color' do
-    expect(label.name).to eq('Example Label')
+    expect(label.name).to eq('Sample Label')
     expect(label.color).to eq('Blue')
   end
 
