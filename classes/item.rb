@@ -40,6 +40,6 @@ class Item
 
     # Check if the publish date is older than 10 years
     publish_year = @publish_date.year
-    return current_year - publish_year > 10
+    current_year - publish_year > 10
   end
 end
