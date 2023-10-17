@@ -5,8 +5,8 @@ require_relative '../classes/label'
 require_relative '../classes/item'
 
 describe Label do
-  let(:label) { Label.new('Sample Label', 'Blue') }
-  let(:item) { Item.new(1, Date.new(2020, 1, 1)) }
+  label = Label.new('Sample Label', 'Blue')
+  item = Item.new(Date.new(2020, 1, 1))
 
   it 'initializes with a name and color' do
     expect(label.name).to eq('Sample Label')
@@ -17,6 +17,6 @@ describe Label do
     label.add_item(item)
 
     expect(label.items).to include(item)
-    expect(item.label).to eq(label)
+    expect(item.label).to include(label)
   end
 end
