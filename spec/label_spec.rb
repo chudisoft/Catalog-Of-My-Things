@@ -1,6 +1,7 @@
 # label_spec.rb
 require 'rspec'
 require_relative '../classes/label'
+require_relative '../classes/item'
 
 describe Label do
   let(:label) { Label.new('Sample Label', 'Blue') }
