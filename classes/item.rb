@@ -34,7 +34,7 @@ class Item
 
   private
 
-  def can_be_archived
+  def can_be_archived?
     # Calculate the current year
     current_year = Time.now.year
 
