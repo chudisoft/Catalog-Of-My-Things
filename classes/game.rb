@@ -10,7 +10,7 @@ class Game < Item
     @author = author
   end
 
-    def can_be_archived?
+  def can_be_archived?
     super && Date.today.year - Date.parse(@last_played_at).year > 2
   end
 end
