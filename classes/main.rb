@@ -31,7 +31,7 @@ class Main
   def create_item
     print 'Enter publish date (YYYY-MM-DD): '
     publish_date = Date.parse(gets.chomp)
-    item = Item.new(nil, publish_date)
+    item = Item.new(publish_date)
     @items << item
     puts "Item created with ID: #{item.id}"
   end
