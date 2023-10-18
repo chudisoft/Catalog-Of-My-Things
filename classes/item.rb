@@ -5,7 +5,7 @@ class Item
   attr_writer :publish_date
 
   def initialize(publish_date, id: 0)
-    @id = id <= 0 ? id : rand(1..200)
+    @id = id <= 0 ? rand(1..200) : id
     @genre = []
     @author = []
     @source = []

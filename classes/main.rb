@@ -1,37 +1,44 @@
 require 'json'
+require 'Date'
 require_relative 'item'
+require_relative 'book'
+require_relative 'label'
 
 class Main
-  ACTIONS = [
-    -> { create_item }, -> { move_to_archive },
-    -> { list_all_books }, -> { list_all_labels },
-    -> { add_book }, -> { add_label }, -> { quit },
-    -> { puts 'Invalid option. Please choose a valid option.' }
-  ].freeze
-
   def initialize
-    @items = [] # Create an empty array to store items
+    @actions = [
+      -> { create_item }, -> { move_to_archive },
+      -> { list_all_books }, -> { list_all_labels },
+      -> { add_book }, -> { add_label }, -> { quit },
+      -> { puts 'Invalid option. Please choose a valid option.' }
+    ]
+    @items = []
+    @labels = []
     @running = true # Initialize the app as running
 
     load_records
 
     while @running
-      puts 'Options:'
-      puts '1. Create Item'
-      puts '2. Move Item to Archive'
-      puts '3. List all books'
-      puts '4. List all labels'
-      puts '5. Add a book'
-      puts '6. Add a label'
-      puts '7. Quit'
-
-      print 'Choose an option: '
+      print_options
       option = gets.chomp.to_i
-      ACTIONS[option - 1].call
+      @actions[option - 1].call
     end
   end
 
   private
+
+  def print_options
+    puts 'Options:'
+    puts '1. Create Item'
+    puts '2. Move Item to Archive'
+    puts '3. List all books'
+    puts '4. List all labels'
+    puts '5. Add a book'
+    puts '6. Add a label'
+    puts '7. Quit'
+
+    print 'Choose an option: '
+  end
 
   def load_records
     load_books
