@@ -17,9 +17,9 @@ class Label
 
   def to_json(*_args)
     {
-      name: @name,
-      color: @color,
-      items: @items.map(&:to_json)
-    }.to_json
+      'name' => @name,
+      'color' => @color,
+      'items' => @items.map(&:to_json)
+    }
   end
 end

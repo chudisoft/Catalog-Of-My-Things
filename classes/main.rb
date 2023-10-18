@@ -1,5 +1,5 @@
 require 'json'
-require 'Date'
+require 'date'
 require_relative 'item'
 require_relative 'book'
 require_relative 'label'
@@ -46,11 +46,11 @@ class Main
   end
 
   def load_books
-    return unless File.exist?('books.json')
+    return unless File.exist?('json_data/books.json')
 
-    books_json = JSON.parse(File.read('books.json'))
+    books_json = JSON.parse(File.read('json_data/books.json'))
     books_json.each do |book_data|
-      id = Date.parse(book_data['id'])
+      id = book_data['id']
       publish_date = Date.parse(book_data['publish_date'])
       publisher = book_data['publisher']
       cover_state = book_data['cover_state']
@@ -60,9 +60,9 @@ class Main
   end
 
   def load_labels
-    return unless File.exist?('labels.json')
+    return unless File.exist?('json_data/labels.json')
 
-    labels_json = JSON.parse(File.read('labels.json'))
+    labels_json = JSON.parse(File.read('json_data/labels.json'))
     labels_json.each do |label_data|
       name = label_data['name']
       color = label_data['color']
@@ -95,15 +95,16 @@ class Main
   def save_books
     # Save books to a JSON file
     books_json = @items.select { |item| item.is_a?(Book) }.map(&:to_json)
-    File.write('books.json', JSON.pretty_generate(books_json))
+    File.write('json_data/books.json', JSON.pretty_generate(books_json))
 
     puts 'Books saved as JSON.'
   end
 
   def save_labels
     # Save labels to a JSON file
-    labels_json = @labels.map(&:to_json)
-    File.write('labels.json', JSON.pretty_generate(labels_json))
+    labels_hashes = @labels.map(&:to_json)
+    labels_json = JSON.pretty_generate(labels_hashes)
+    File.write('json_data/labels.json', labels_json)
 
     puts 'Labels saved as JSON.'
   end
@@ -141,6 +142,7 @@ class Main
     book = Book.new(publish_date, publisher, cover_state)
     @items << book
     puts "Book added with ID: #{book.id}"
+    save_books
   end
 
   def add_label
@@ -152,6 +154,7 @@ class Main
     label = Label.new(name, color)
     @labels << label
     puts "Label added: #{label.name}"
+    save_labels
   end
 
   def quit

@@ -36,14 +36,14 @@ class Item
 
   def to_json(*_args)
     {
-      id: @id,
-      genre: @genre,
-      author: @author,
-      source: @source,
-      label: @label,
-      publish_date: @publish_date,
-      archived: @archived
-    }.to_json
+      'id' => @id,
+      'genre' => @genre,
+      'author' => @author,
+      'source' => @source,
+      'label' => @label,
+      'publish_date' => @publish_date,
+      'archived' => @archived
+    }
   end
 
   private
