@@ -1,3 +1,5 @@
+require 'json'
+
 class Item
   attr_reader :id, :genre, :author, :source, :label
   attr_writer :publish_date
@@ -30,6 +32,18 @@ class Item
 
   def move_to_archive
     @archived = true if can_be_archived?
+  end
+
+  def to_json(*_args)
+    {
+      id: @id,
+      genre: @genre,
+      author: @author,
+      source: @source,
+      label: @label,
+      publish_date: @publish_date,
+      archived: @archived
+    }.to_json
   end
 
   private
