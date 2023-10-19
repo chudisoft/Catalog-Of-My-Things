@@ -89,7 +89,7 @@ class CreateModels
 
     author = Author.new(first_name, last_name)
     @main.authors << author
-    puts "Author added: #{author.name}"
+    puts "Author added: #{author.first_name}"
     save_authors
   end
 
