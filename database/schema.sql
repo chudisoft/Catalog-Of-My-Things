@@ -37,11 +37,22 @@ CREATE TABLE music_albums (
     artist VARCHAR(255) NOT NULL,
     release_date DATE NOT NULL,
     on_spotify BOOLEAN,
+    item_id INTEGER,
     genre_id INT
+    FOREIGN KEY (item_id) REFERENCES items(id)
 );
 
 -- Table for genres
 CREATE TABLE genres (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL
+);
+
+-- Table for items_genres (many-to-many relationship)
+CREATE TABLE items_genres (
+    item_id INT,
+    genre_id INT,
+    PRIMARY KEY (item_id, genre_id),
+    FOREIGN KEY (item_id) REFERENCES items(id),
+    FOREIGN KEY (genre_id) REFERENCES genres(id)
 );
