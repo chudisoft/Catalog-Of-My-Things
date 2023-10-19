@@ -17,5 +17,24 @@
     "archived": false,
     "publisher": "test",
     "cover_state": "bad"
+  },
+  {
+    "id": 139,
+    "genre": [
+
+    ],
+    "author": [
+
+    ],
+    "source": [
+
+    ],
+    "label": [
+
+    ],
+    "publish_date": "2022-10-09",
+    "archived": false,
+    "publisher": "Chris",
+    "cover_state": "bad"
   }
 ]
