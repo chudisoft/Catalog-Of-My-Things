@@ -23,9 +23,10 @@ class Loader
       last_played_at = book_data['last_played_at']
       game = Game.new(publish_date, multiplayer, last_played_at, id: id)
       main.instance_variable_get(:@items) << game
-  dev
+    end
+  end
 
-  def self.load_books(main)
+  def load_books(main)
     return unless File.exist?('json_data/books.json')
 
     books_json = JSON.parse(File.read('json_data/books.json'))
@@ -39,7 +40,7 @@ class Loader
     end
   end
 
-  def self.load_labels(main)
+  def load_labels(main)
     return unless File.exist?('json_data/labels.json')
 
     labels_json = JSON.parse(File.read('json_data/labels.json'))
@@ -51,7 +52,7 @@ class Loader
     end
   end
 
-  def self.load_genres(main)
+  def load_genres(main)
     return unless File.exist?('json_data/genres.json')
 
     genres_json = JSON.parse(File.read('json_data/genres.json'))
@@ -59,11 +60,11 @@ class Loader
       id = genre_data['id']
       name = genre_data['name']
       genre = Genre.new(name, id: id)
-      main.instance_variable_get(:@items) << genre
+      main.instance_variable_get(:@genres) << genre
     end
   end
 
-  def self.load_music_albums(main)
+  def load_music_albums(main)
     return unless File.exist?('json_data/music_album.json')
 
     music_album_json = JSON.parse(File.read('json_data/music_album.json'))
