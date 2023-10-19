@@ -5,6 +5,9 @@ require_relative 'game'
 require_relative 'author'
 require_relative 'book'
 require_relative 'label'
+require_relative 'genre'
+require_relative 'music_album'
+require_relative 'loader'
 
 class Main
   attr_accessor :@authors, :@items
@@ -12,13 +15,15 @@ class Main
     @actions = [
       -> { create_item }, -> { move_to_archive },
       -> { list_all_books }, -> { list_all_labels },
-      -> { add_book }, -> { add_label }, -> { quit },
+      -> { add_book }, -> { add_label }, -> { add_genre }, -> { add_music_album }, -> { quit },
       -> { puts 'Invalid option. Please choose a valid option.' }
     ]
+
     @items = []
     @labels = []
     @authors = []
-    @running = true # Initialize the app as running
+    @music_album = []
+    @running = true
 
     load_records
 
@@ -39,40 +44,25 @@ class Main
     puts '4. List all labels'
     puts '5. Add a book'
     puts '6. Add a label'
-    puts '7. Quit'
+    puts '7. Add a genre'
+    puts '8. Add a music album'
+    puts '9. Quit'
 
     print 'Choose an option: '
   end
 
   def load_records
-    load_books
-    load_labels
+    ensure_json_data_directory
+    Loader.load_books(self)
+    Loader.load_labels(self)
+    Loader.load_genres(self)
+    Loader.load_music_albums(self)
   end
 
-  def load_books
-    return unless File.exist?('json_data/books.json')
+  def ensure_json_data_directory
+    return if Dir.exist?('json_data')
 
-    books_json = JSON.parse(File.read('json_data/books.json'))
-    books_json.each do |book_data|
-      id = book_data['id']
-      publish_date = Date.parse(book_data['publish_date'])
-      publisher = book_data['publisher']
-      cover_state = book_data['cover_state']
-      book = Book.new(publish_date, publisher, cover_state, id: id)
-      @items << book
-    end
-  end
-
-  def load_labels
-    return unless File.exist?('json_data/labels.json')
-
-    labels_json = JSON.parse(File.read('json_data/labels.json'))
-    labels_json.each do |label_data|
-      name = label_data['name']
-      color = label_data['color']
-      label = Label.new(name, color)
-      @labels << label
-    end
+    Dir.mkdir('json_data')
   end
 
   def create_item
@@ -113,14 +103,6 @@ class Main
     puts 'Authors saved as JSON.'
   end
 
-  def save_books
-    # Save books to a JSON file
-    books_json = @items.select { |item| item.is_a?(Book) }.map(&:to_json)
-    File.write('json_data/books.json', JSON.pretty_generate(books_json))
-
-    puts 'Books saved as JSON.'
-  end
-
   def save_labels
     # Save labels to a JSON file
     labels_hashes = @labels.map(&:to_json)
@@ -141,15 +123,26 @@ class Main
     end
   end
 
-  def list_all_labels
-    if @labels.empty?
-      puts 'No labels found.'
-    else
-      puts 'List of all labels:'
-      @labels.each do |label|
-        puts "First name: #{label.first_name}, Last name: #{label.last_name}"
-      end
-    end
+  def save_genres
+    genres_json = @items.select { |item| item.is_a?(Genre) }.map(&:to_json)
+    File.write('json_data/genres.json', JSON.pretty_generate(genres_json))
+
+    puts 'Genres saved as JSON.'
+  end
+
+  def save_music_album
+    music_album_json = @music_album.map(&:to_json)
+    File.write('json_data/music_album.json', JSON.pretty_generate(music_album_json))
+
+    puts 'Music Albums saved as JSON.'
+  end
+
+  def save_books
+    # Save books to a JSON file
+    books_json = @items.select { |item| item.is_a?(Book) }.map(&:to_json)
+    File.write('json_data/books.json', JSON.pretty_generate(books_json))
+
+    puts 'Books saved as JSON.'
   end
 
   def list_all_books
@@ -213,6 +206,32 @@ class Main
     @items << book
     puts "Book added with ID: #{book.id}"
     save_books
+  end
+
+  def add_genre
+    print 'Enter genre name: '
+    name = gets.chomp
+
+    genre = Genre.new(0, name)
+    @items << genre
+    puts "Genre added with ID: #{genre.id}"
+    save_genres
+  end
+
+  def add_music_album
+    print 'Enter the title of the music album: '
+    title = gets.chomp
+    print 'Enter the artist of the music album: '
+    artist = gets.chomp
+    print 'Is the music album on Spotify? (true/false): '
+    on_spotify = gets.chomp.downcase == 'true'
+    print 'Enter the genre of the music album: '
+    genre = gets.chomp
+
+    music_album = MusicAlbum.new(title, artist, on_spotify, genre)
+    @music_album << music_album
+    puts "Music Album added with ID: #{music_album.id}"
+    save_music_album
   end
 
   def add_label
