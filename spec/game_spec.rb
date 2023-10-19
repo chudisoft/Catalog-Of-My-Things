@@ -5,7 +5,7 @@ require_relative '../classes/game'
 
 describe Game do
   context 'Testing the game class' do
-    game = Game.new(1, Date.new(2012, 2, 27), 'yes', '2013-12-12')
+    game = Game.new(Date.new(2012, 2, 27), 'yes', '2013-12-12')
 
     it 'Should create new game with those arguments' do
       expect(game).to be_an_instance_of(Game)
