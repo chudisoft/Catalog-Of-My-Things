@@ -50,7 +50,5 @@ CREATE TABLE Authors (
  first_name VARCHAR
 (255),
  last_name VARCHAR
-(255),
- items TEXT
- []
+(255)
 );
