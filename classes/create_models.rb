@@ -1,3 +1,11 @@
+require_relative 'item'
+require_relative 'game'
+require_relative 'author'
+require_relative 'book'
+require_relative 'label'
+require_relative 'genre'
+require_relative 'music_album'
+
 class CreateModels
   def initialize(main)
     @main = main
@@ -120,7 +128,7 @@ class CreateModels
     genre = gets.chomp
 
     music_album = MusicAlbum.new(title, artist, on_spotify, genre)
-    @music_album << music_album
+    @main.items << music_album
     puts "Music Album added with ID: #{music_album.id}"
     save_music_album
   end

@@ -7,38 +7,48 @@ require_relative 'book'
 require_relative 'label'
 require_relative 'genre'
 require_relative 'music_album'
-require_relative 'loader'
 require_relative 'create_models'
+require_relative 'loader'
+require_relative 'list_all'
 
 class Main
-  attr_accessor :@authors, :@items, :genres
+  attr_accessor :authors, :items, :genres, :labels
 
   def initialize
-    @items = []
-    @labels = []
     @authors = []
+    @items = []
     @genres = []
-    @music_album = []
-    @running = true
+    @labels = []
+
+    @create_models = CreateModels.new(self)
+    @list_all = ListAll.new(self)
+    @actions = actions
 
     load_records
-    create_models = CreateModels.new(self)
-    @actions = [
-      -> { create_models.create_item }, -> { move_to_archive },
-      -> { list_all_books }, -> { list_all_labels },
-      -> { create_models.add_book }, -> { create_models.add_label },
-      -> { create_models.add_genre }, -> { create_models.add_music_album }, -> { quit },
-      -> { puts 'Invalid option. Please choose a valid option.' }
-    ]
-
-    while @running
-      print_options
-      option = gets.chomp.to_i
-      @actions[option - 1].call
-    end
+    run
   end
 
   private
+
+  def run
+    print_options
+    option = gets.chomp.to_i
+    @actions[option - 1].call
+    run unless option == 15
+  end
+
+  def actions
+    [
+      -> { @create_models.create_item }, -> { move_to_archive },
+      -> { @list_all.list_all_books }, -> { @list_all.list_all_labels },
+      -> { @list_all.list_all_games }, -> { @list_all.list_all_authors },
+      -> { @list_all.list_all_genre }, -> { @list_all.list_all_albums },
+      -> { @create_models.add_book }, -> { @create_models.add_label },
+      -> { @create_models.add_genre }, -> { @create_models.add_music_album },
+      -> { @create_models.add_author }, -> { @create_models.add_music_game },
+      -> { quit }, -> { puts 'Invalid option. Please choose a valid option.' }
+    ]
+  end
 
   def print_options
     puts 'Options:'
@@ -46,21 +56,30 @@ class Main
     puts '2. Move Item to Archive'
     puts '3. List all books'
     puts '4. List all labels'
-    puts '5. Add a book'
-    puts '6. Add a label'
-    puts '7. Add a genre'
-    puts '8. Add a music album'
-    puts '9. Quit'
+    puts '5. List all games'
+    puts '6. List all authors'
+    puts '7. List all genres'
+    puts '8. List all albums'
+    puts '9. Add a book'
+    puts '10. Add a label'
+    puts '11. Add a genre'
+    puts '12. Add a music album'
+    puts '13. Add an author'
+    puts '14. Add a game'
+    puts '15. Quit'
 
     print 'Choose an option: '
   end
 
   def load_records
     ensure_json_data_directory
-    Loader.load_books(self)
-    Loader.load_labels(self)
-    Loader.load_genres(self)
-    Loader.load_music_albums(self)
+    load = Loader.new
+    load.load_authors(self)
+    load.load_games(self)
+    load.load_books(self)
+    load.load_labels(self)
+    load.load_genres(self)
+    load.load_music_albums(self)
   end
 
   def ensure_json_data_directory
@@ -79,41 +98,6 @@ class Main
       puts "Item with ID #{item.id} moved to the archive."
     else
       puts "Item with ID #{item_id} not found."
-    end
-  end
-
-  def list_all_games
-    if @items.empty?
-      puts 'No games found.'
-    else
-      puts 'List of all games:'
-      @items.each do |item|
-        if item.is_a?(Game)
-          puts "ID: #{item.id}, Multiplayer: #{item.multiplayer}, Last played at: #{item.last_played_at}"
-        end
-      end
-    end
-  end
-
-  def list_all_books
-    if @items.empty?
-      puts 'No books found.'
-    else
-      puts 'List of all books:'
-      @items.each do |item|
-        puts "ID: #{item.id}, Publisher: #{item.publisher}, Cover State: #{item.cover_state}" if item.is_a?(Book)
-      end
-    end
-  end
-
-  def list_all_labels
-    if @labels.empty?
-      puts 'No labels found.'
-    else
-      puts 'List of all labels:'
-      @labels.each do |label|
-        puts "Name: #{label.name}, Color: #{label.color}"
-      end
     end
   end
 
