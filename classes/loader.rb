@@ -1,5 +1,32 @@
 class Loader
-  def self.load_books(main)
+  def load_authors(main)
+    return unless File.exist?('json_data/authors.json')
+
+    authors_json = JSON.parse(File.read('json_data/authors.json'))
+    authors_json.each do |author_data|
+      id = author_data['id']
+      first_name = author_data['first_name']
+      last_name = author_data['last_name']
+      author = Author.new(first_name, last_name, id: id)
+      main.authors << author
+    end
+  end
+
+  def load_games(main)
+    return unless File.exist?('json_data/games.json')
+
+    games_json = JSON.parse(File.read('json_data/games.json'))
+    games_json.each do |game_data|
+      id = game_data['id']
+      publish_date = Date.parse(book_data['publish_date'])
+      multiplayer = book_data['multiplayer']
+      last_played_at = book_data['last_played_at']
+      game = Game.new(publish_date, multiplayer, last_played_at, id: id)
+      main.items << game
+    end
+  end
+
+  def load_books(main)
     return unless File.exist?('json_data/books.json')
 
     books_json = JSON.parse(File.read('json_data/books.json'))
@@ -9,11 +36,11 @@ class Loader
       publisher = book_data['publisher']
       cover_state = book_data['cover_state']
       book = Book.new(publish_date, publisher, cover_state, id: id)
-      main.instance_variable_get(:@items) << book
+      main.items << book
     end
   end
 
-  def self.load_labels(main)
+  def load_labels(main)
     return unless File.exist?('json_data/labels.json')
 
     labels_json = JSON.parse(File.read('json_data/labels.json'))
@@ -21,11 +48,11 @@ class Loader
       name = label_data['name']
       color = label_data['color']
       label = Label.new(name, color)
-      main.instance_variable_get(:@labels) << label
+      main.labels << label
     end
   end
 
-  def self.load_genres(main)
+  def load_genres(main)
     return unless File.exist?('json_data/genres.json')
 
     genres_json = JSON.parse(File.read('json_data/genres.json'))
@@ -33,11 +60,11 @@ class Loader
       id = genre_data['id']
       name = genre_data['name']
       genre = Genre.new(name, id: id)
-      main.instance_variable_get(:@items) << genre
+      main.genres << genre
     end
   end
 
-  def self.load_music_albums(main)
+  def load_music_albums(main)
     return unless File.exist?('json_data/music_album.json')
 
     music_album_json = JSON.parse(File.read('json_data/music_album.json'))
@@ -47,7 +74,7 @@ class Loader
       on_spotify = music_album_data['on_spotify']
       genre = music_album_data['genre']
       music_album = MusicAlbum.new(title, artist, on_spotify, genre)
-      main.instance_variable_get(:@music_album) << music_album
+      main.items << music_album
     end
   end
 end
