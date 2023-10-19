@@ -1,15 +1,20 @@
+require 'json'
+
 class Item
+  attr_accessor :publish_date, :title, :artist, :on_spotify
   attr_reader :id, :genre, :author, :source, :label
-  attr_writer :publish_date
 
   def initialize(publish_date, id: 0)
-    @id = id <= 0 ? id : rand(1..200)
+    @id = id <= 0 ? rand(1..200) : id
     @genre = []
     @author = []
     @source = []
     @label = []
     @publish_date = publish_date
     @archived = false
+    @title = nil
+    @artist = nil
+    @on_spotify = false
   end
 
   def add_genre(genre)
@@ -30,6 +35,18 @@ class Item
 
   def move_to_archive
     @archived = true if can_be_archived?
+  end
+
+  def to_json(*_args)
+    {
+      'id' => @id,
+      'genre' => @genre,
+      'author' => @author,
+      'source' => @source,
+      'label' => @label,
+      'publish_date' => @publish_date,
+      'archived' => @archived
+    }
   end
 
   private

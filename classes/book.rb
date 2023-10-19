@@ -1,3 +1,5 @@
+require 'json'
+
 class Book < Item
   attr_reader :publisher, :cover_state
 
@@ -14,5 +16,19 @@ class Book < Item
     current_year = Time.now.year
 
     parent_result || (@cover_state == 'bad' && (current_year - publish_year > 10))
+  end
+
+  def to_json(*_args)
+    {
+      'id' => @id,
+      'genre' => @genre,
+      'author' => @author,
+      'source' => @source,
+      'label' => @label,
+      'publish_date' => @publish_date,
+      'archived' => @archived,
+      'publisher' => @publisher,
+      'cover_state' => @cover_state
+    }
   end
 end
