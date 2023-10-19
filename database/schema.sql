@@ -33,22 +33,23 @@ CREATE TABLE item_labels (
  --Create table for games
 
 CREATE TABLE games (
-  id INT GENERATED ALWAYS AS IDENTITY,
+  id INT PRIMARY KEY,
   publish_date DATE,
-  author_id INT REFERENCES authors   
-(id),
-  can_be_archived BOOLEAN,
   multiplayer BOOLEAN,
-  last_played_at DATE,
-  PRIMARY KEY
-(id)
+  last_played_at DATE
 );
 
 --Create table for Authors
 CREATE TABLE Authors (
- id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
- first_name VARCHAR
-(255),
- last_name VARCHAR
-(255)
+ id INT PRIMARY KEY,
+ first_name VARCHAR(255),
+ last_name VARCHAR(255)
+);
+
+-- Create a many-to-many relationship table between items and authors
+CREATE TABLE item_authors (
+  item_id INTEGER,
+  author_id INTEGER,
+  FOREIGN KEY (item_id) REFERENCES items(id),
+  FOREIGN KEY (author_id) REFERENCES authors(id)
 );

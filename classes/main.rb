@@ -1,10 +1,13 @@
 require 'json'
 require 'date'
 require_relative 'item'
+require_relative 'game'
+require_relative 'author'
 require_relative 'book'
 require_relative 'label'
 
 class Main
+  attr_accessor :@authors, :@items
   def initialize
     @actions = [
       -> { create_item }, -> { move_to_archive },
@@ -14,6 +17,7 @@ class Main
     ]
     @items = []
     @labels = []
+    @authors = []
     @running = true # Initialize the app as running
 
     load_records
@@ -92,6 +96,23 @@ class Main
     end
   end
 
+  def save_games
+    # Save games to a JSON file
+    games_json = @items.select { |item| item.is_a?(Game) }.map(&:to_json)
+    File.write('json_data/games.json', JSON.pretty_generate(games_json))
+
+    puts 'Games saved as JSON.'
+  end
+
+  def save_authors
+    # Save labels to a JSON file
+    authors_hashes = @authors.map(&:to_json)
+    authors_json = JSON.pretty_generate(authors_hashes)
+    File.write('json_data/authors.json', authors_json)
+
+    puts 'Authors saved as JSON.'
+  end
+
   def save_books
     # Save books to a JSON file
     books_json = @items.select { |item| item.is_a?(Book) }.map(&:to_json)
@@ -107,6 +128,28 @@ class Main
     File.write('json_data/labels.json', labels_json)
 
     puts 'Labels saved as JSON.'
+  end
+
+  def list_all_games
+    if @items.empty?
+      puts 'No games found.'
+    else
+      puts 'List of all games:'
+      @items.each do |item|
+        puts "ID: #{item.id}, Multiplayer: #{item.multiplayer}, Last played at: #{item.last_played_at}" if item.is_a?(Game)
+      end
+    end
+  end
+
+  def list_all_labels
+    if @labels.empty?
+      puts 'No labels found.'
+    else
+      puts 'List of all labels:'
+      @labels.each do |label|
+        puts "First name: #{label.first_name}, Last name: #{label.last_name}"
+      end
+    end
   end
 
   def list_all_books
@@ -130,6 +173,33 @@ class Main
       end
     end
   end
+
+  def add_game
+    print 'Enter publish date (YYYY-MM-DD): '
+    publish_date = Date.parse(gets.chomp)
+    print 'Enter publisher: '
+    multiplayer = gets.chomp
+    print 'Enter cover state: '
+    last_played_at = gets.chomp
+
+    game = Game.new(publish_date, multiplayer, last_played_at)
+    @items << game
+    puts "Game added with ID: #{game.id}"
+    save_games
+  end
+
+  def add_author
+    print 'Enter author first_name: '
+    first_name = gets.chomp
+    print 'Enter author last_name: '
+    last_name = gets.chomp
+
+    author = Author.new(first_name, last_name)
+    @authors << author
+    puts "Author added: #{author.name}"
+    save_authors
+  end
+
 
   def add_book
     print 'Enter publish date (YYYY-MM-DD): '
