@@ -5,10 +5,7 @@ require_relative 'book'
 require_relative 'label'
 require_relative 'genre'
 require_relative 'music_album'
-require_relative 'book_loader'
-require_relative 'label_loader'
-require_relative 'genre_loader'
-require_relative 'music_album_loader'
+require_relative 'loader'
 
 class Main
   def initialize
@@ -52,10 +49,10 @@ class Main
 
   def load_records
     ensure_json_data_directory
-    BookLoader.load_books(self)
-    LabelLoader.load_labels(self)
-    GenreLoader.load_genres(self)
-    MusicAlbumLoader.load_music_albums(self)
+    Loader.load_books(self)
+    Loader.load_labels(self)
+    Loader.load_genres(self)
+    Loader.load_music_albums(self)
   end
 
   def ensure_json_data_directory
