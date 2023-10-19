@@ -38,7 +38,7 @@ CREATE TABLE music_albums (
     release_date DATE NOT NULL,
     on_spotify BOOLEAN,
     item_id INTEGER,
-    genre_id INT
+    music_album_id INT,
     FOREIGN KEY (item_id) REFERENCES items(id)
 );
 
