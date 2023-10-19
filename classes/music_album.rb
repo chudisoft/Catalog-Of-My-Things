@@ -8,10 +8,20 @@ class MusicAlbum < Item
     @title = title
     @artist = artist
     @on_spotify = false
+    @genre = genre
   end
 
   def on_spotify?
     @on_spotify
+  end
+
+  def to_json(*_args)
+    {
+      'title' => @title,
+      'artist' => @artist,
+      'on_spotify' => @on_spotify,
+      'genre' => @genre.to_json
+    }
   end
 
   private
