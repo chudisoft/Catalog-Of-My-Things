@@ -39,7 +39,7 @@ class CreateModels
 
   def save_labels
     # Save labels to a JSON file
-    labels_hashes = @labels.map(&:to_json)
+    labels_hashes = @main.labels.map(&:to_json)
     labels_json = JSON.pretty_generate(labels_hashes)
     File.write('json_data/labels.json', labels_json)
 
@@ -152,7 +152,7 @@ class CreateModels
     color = gets.chomp
 
     label = Label.new(name, color)
-    @labels << label
+    @main.labels << label
     puts '*******************************************************************'
     puts "Label added: #{label.name}"
     save_labels

@@ -17,5 +17,24 @@
     "archived": false,
     "multiplayer": true,
     "last_played_at": "2023-09-09"
+  },
+  {
+    "id": 79,
+    "genre": [
+
+    ],
+    "author": [
+
+    ],
+    "source": [
+
+    ],
+    "label": [
+
+    ],
+    "publish_date": "2023-10-09",
+    "archived": false,
+    "multiplayer": true,
+    "last_played_at": "2023-10-19"
   }
 ]
