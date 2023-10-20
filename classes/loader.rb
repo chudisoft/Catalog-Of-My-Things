@@ -18,9 +18,9 @@ class Loader
     games_json = JSON.parse(File.read('json_data/games.json'))
     games_json.each do |game_data|
       id = game_data['id']
-      publish_date = Date.parse(book_data['publish_date'])
-      multiplayer = book_data['multiplayer']
-      last_played_at = book_data['last_played_at']
+      publish_date = Date.parse(game_data['publish_date'])
+      multiplayer = game_data['multiplayer']
+      last_played_at = game_data['last_played_at']
       game = Game.new(publish_date, multiplayer, last_played_at, id: id)
       main.items << game
     end

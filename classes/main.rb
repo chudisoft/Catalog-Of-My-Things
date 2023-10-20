@@ -45,7 +45,7 @@ class Main
       -> { @list_all.list_all_genre }, -> { @list_all.list_all_albums },
       -> { @create_models.add_book }, -> { @create_models.add_label },
       -> { @create_models.add_genre }, -> { @create_models.add_music_album },
-      -> { @create_models.add_author }, -> { @create_models.add_music_game },
+      -> { @create_models.add_author }, -> { @create_models.add_game },
       -> { quit }, -> { puts 'Invalid option. Please choose a valid option.' }
     ]
   end
