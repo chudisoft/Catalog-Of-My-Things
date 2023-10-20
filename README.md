@@ -12,6 +12,7 @@
     - [Tech Stack ](#tech-stack-)
     - [Key Features ](#key-features-)
         - [🚀 Live Demo ](#-live-demo-)
+
   - [💻 Getting Started ](#-getting-started-)
     - [Prerequisites](#prerequisites)
     - [Setup](#setup)
@@ -62,6 +63,9 @@
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+🚀 Presentation video
+https://drive.google.com/file/d/166RT38BhrBXrWi-6zMvUB06XFARjpXQh/view?usp=sharing
+
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
