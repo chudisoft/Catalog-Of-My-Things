@@ -1,4 +1,3 @@
-require 'rspec'
 require 'date'
 require_relative '../classes/item'
 require_relative '../classes/book'

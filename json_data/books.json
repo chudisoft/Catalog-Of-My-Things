@@ -55,5 +55,24 @@
     "archived": false,
     "publisher": "haha",
     "cover_state": "bad"
+  },
+  {
+    "id": 143,
+    "genre": [
+
+    ],
+    "author": [
+
+    ],
+    "source": [
+
+    ],
+    "label": [
+
+    ],
+    "publish_date": "2020-10-08",
+    "archived": false,
+    "publisher": "Uduekwe",
+    "cover_state": "good"
   }
 ]

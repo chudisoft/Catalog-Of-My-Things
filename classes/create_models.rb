@@ -9,6 +9,7 @@ require_relative 'music_album'
 class CreateModels
   def initialize(main)
     @main = main
+    @music_albums = @main.items
   end
 
   def create_item
@@ -38,7 +39,7 @@ class CreateModels
 
   def save_labels
     # Save labels to a JSON file
-    labels_hashes = @labels.map(&:to_json)
+    labels_hashes = @main.labels.map(&:to_json)
     labels_json = JSON.pretty_generate(labels_hashes)
     File.write('json_data/labels.json', labels_json)
 
@@ -53,8 +54,8 @@ class CreateModels
   end
 
   def save_music_album
-    music_album_json = @music_album.map(&:to_json)
-    File.write('json_data/music_album.json', JSON.pretty_generate(music_album_json))
+    music_albums_json = @music_albums.select { |item| item.is_a?(MusicAlbum) }.map(&:to_json)
+    File.write('json_data/music_album.json', JSON.pretty_generate(music_albums_json))
 
     puts 'Music Albums saved as JSON.'
   end
@@ -70,15 +71,17 @@ class CreateModels
   def add_game
     print 'Enter publish date (YYYY-MM-DD): '
     publish_date = Date.parse(gets.chomp)
-    print 'Enter publisher: '
-    multiplayer = gets.chomp
-    print 'Enter cover state: '
-    last_played_at = gets.chomp
+    print 'Is it multiplayer? (true/false): '
+    multiplayer = gets.chomp.downcase == 'true'
+    print 'Enter the date last played (YYYY-MM-DD): '
+    last_played_at = Date.parse(gets.chomp)
 
     game = Game.new(publish_date, multiplayer, last_played_at)
-    @main.items << game
+    @main.instance_variable_get(:@items) << game
+    puts '*******************************************************************'
     puts "Game added with ID: #{game.id}"
     save_games
+    puts '*******************************************************************'
   end
 
   def add_author
@@ -89,8 +92,10 @@ class CreateModels
 
     author = Author.new(first_name, last_name)
     @main.authors << author
-    puts "Author added: #{author.first_name}"
+    puts '*******************************************************************'
+    puts "Author added: #{author.first_name} #{author.last_name}"
     save_authors
+    puts '*******************************************************************'
   end
 
   def add_book
@@ -103,8 +108,10 @@ class CreateModels
 
     book = Book.new(publish_date, publisher, cover_state)
     @main.items << book
+    puts '*******************************************************************'
     puts "Book added with ID: #{book.id}"
     save_books
+    puts '*******************************************************************'
   end
 
   def add_genre
@@ -113,8 +120,11 @@ class CreateModels
 
     genre = Genre.new(0, name)
     @main.genres << genre
+    puts '*******************************************************************'
     puts "Genre added with ID: #{genre.id}"
+    puts "Genre added with ID: #{genre.name}"
     save_genres
+    puts '*******************************************************************'
   end
 
   def add_music_album
@@ -129,8 +139,10 @@ class CreateModels
 
     music_album = MusicAlbum.new(title, artist, on_spotify, genre)
     @main.items << music_album
+    puts '*******************************************************************'
     puts "Music Album added with ID: #{music_album.id}"
     save_music_album
+    puts '*******************************************************************'
   end
 
   def add_label
@@ -140,8 +152,10 @@ class CreateModels
     color = gets.chomp
 
     label = Label.new(name, color)
-    @labels << label
+    @main.labels << label
+    puts '*******************************************************************'
     puts "Label added: #{label.name}"
     save_labels
+    puts '*******************************************************************'
   end
 end

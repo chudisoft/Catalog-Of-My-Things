@@ -12,11 +12,12 @@ require_relative 'loader'
 require_relative 'list_all'
 
 class Main
-  attr_accessor :authors, :items, :genres, :labels
+  attr_accessor :authors, :items, :genres, :labels, :music_albums
 
   def initialize
     @authors = []
     @items = []
+    @music_albums = []
     @genres = []
     @labels = []
 
@@ -42,7 +43,7 @@ class Main
       -> { @create_models.create_item }, -> { move_to_archive },
       -> { @list_all.list_all_books }, -> { @list_all.list_all_labels },
       -> { @list_all.list_all_games }, -> { @list_all.list_all_authors },
-      -> { @list_all.list_all_genre }, -> { @list_all.list_all_albums },
+      -> { @list_all.list_all_genres }, -> { @list_all.list_all_albums },
       -> { @create_models.add_book }, -> { @create_models.add_label },
       -> { @create_models.add_genre }, -> { @create_models.add_music_album },
       -> { @create_models.add_author }, -> { @create_models.add_game },

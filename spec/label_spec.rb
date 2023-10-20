@@ -1,5 +1,3 @@
-# label_spec.rb
-require 'rspec'
 require 'date'
 require_relative '../classes/label'
 require_relative '../classes/item'

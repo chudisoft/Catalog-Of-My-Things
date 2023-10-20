@@ -17,9 +17,11 @@ class ListAll
     else
       puts 'List of all games:'
       @main.items.each do |item|
-        if item.is_a?(Game)
-          puts "ID: #{item.id}, Multiplayer: #{item.multiplayer}, Last played at: #{item.last_played_at}"
-        end
+        next unless item.is_a?(Game)
+
+        puts '*******************************************************************'
+        puts "ID: #{item.id}, Multiplayer: #{item.multiplayer}, Last played at: #{item.last_played_at}"
+        puts '*******************************************************************'
       end
     end
   end
@@ -30,7 +32,9 @@ class ListAll
     else
       puts 'List of all books:'
       @main.items.each do |item|
+        puts '*******************************************************************'
         puts "ID: #{item.id}, Publisher: #{item.publisher}, Cover State: #{item.cover_state}" if item.is_a?(Book)
+        puts '*******************************************************************'
       end
     end
   end
@@ -43,10 +47,12 @@ class ListAll
       @main.items.each do |item|
         next unless item.is_a?(MusicAlbum)
 
-        output = "ID: #{item.id}, Publisher: #{item.publisher},"
+        puts '*******************************************************************'
+        output = "ID: #{item.id},"
         output += "  Title: #{item.title}, Artist: #{item.artist},"
         output += " On Spotify: #{item.on_spotify}"
         puts output
+        puts '*******************************************************************'
       end
     end
   end
@@ -57,7 +63,9 @@ class ListAll
     else
       puts 'List of all labels:'
       @main.labels.each do |label|
+        puts '*******************************************************************'
         puts "Name: #{label.name}, Color: #{label.color}"
+        puts '*******************************************************************'
       end
     end
   end
@@ -68,7 +76,9 @@ class ListAll
     else
       puts 'List of all authors:'
       @main.authors.each do |author|
+        puts '*******************************************************************'
         puts "First name: #{author.first_name}, Last_name: #{author.last_name}"
+        puts '*******************************************************************'
       end
     end
   end
@@ -78,8 +88,10 @@ class ListAll
       puts 'No genres found.'
     else
       puts 'List of all genres:'
-      @main.genres.each do |_genre|
+      @main.genres.each do |genre|
+        puts '*******************************************************************'
         puts "Id: #{genre.id}, Name: #{genre.name}"
+        puts '*******************************************************************'
       end
     end
   end

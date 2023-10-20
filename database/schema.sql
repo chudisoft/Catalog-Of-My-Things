@@ -22,10 +22,11 @@ CREATE TABLE labels (
   color VARCHAR(255)
 );
 
--- Create a many-to-many relationship table between items and labels
+-- Table for item_labels (many-to-many relationship)
 CREATE TABLE item_labels (
   item_id INTEGER,
   label_id INTEGER,
+  PRIMARY KEY (item_id, label_id),
   FOREIGN KEY (item_id) REFERENCES items(id),
   FOREIGN KEY (label_id) REFERENCES labels(id)
 );
@@ -46,10 +47,11 @@ CREATE TABLE Authors (
  last_name VARCHAR(255)
 );
 
--- Create a many-to-many relationship table between items and authors
+-- Table for item_authors (many-to-many relationship)
 CREATE TABLE item_authors (
   item_id INTEGER,
   author_id INTEGER,
+  PRIMARY KEY (item_id, author_id),
   FOREIGN KEY (item_id) REFERENCES items(id),
   FOREIGN KEY (author_id) REFERENCES authors(id)
 );
