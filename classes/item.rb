@@ -18,7 +18,7 @@ class Item
   end
 
   def add_genre(genre)
-    @genre << genre unless genre.include?(genre)
+    @genre << genre unless @genre.include?(genre)
   end
 
   def add_author(author)

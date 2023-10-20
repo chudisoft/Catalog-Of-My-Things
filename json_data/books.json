@@ -1,78 +1,29 @@
 [
   {
-    "id": 6,
-    "genre": [
-
-    ],
+    "id": 149,
+    "title": null,
     "author": [
+      {
+        "id": 33,
+        "first_name": "Wasswa",
+        "last_name": "Ashiraf",
+        "items": [
 
+        ]
+      }
     ],
-    "source": [
-
-    ],
+    "publish_date": "2020-10-07",
+    "publisher": "Fx",
+    "cover_state": "good",
     "label": [
+      {
+        "name": "Forex",
+        "color": "label_color",
+        "items": [
 
+        ]
+      }
     ],
-    "publish_date": "2023-10-11",
-    "archived": false,
-    "publisher": "test",
-    "cover_state": "bad"
-  },
-  {
-    "id": 139,
-    "genre": [
-
-    ],
-    "author": [
-
-    ],
-    "source": [
-
-    ],
-    "label": [
-
-    ],
-    "publish_date": "2022-10-09",
-    "archived": false,
-    "publisher": "Chris",
-    "cover_state": "bad"
-  },
-  {
-    "id": 171,
-    "genre": [
-
-    ],
-    "author": [
-
-    ],
-    "source": [
-
-    ],
-    "label": [
-
-    ],
-    "publish_date": "2023-10-08",
-    "archived": false,
-    "publisher": "haha",
-    "cover_state": "bad"
-  },
-  {
-    "id": 143,
-    "genre": [
-
-    ],
-    "author": [
-
-    ],
-    "source": [
-
-    ],
-    "label": [
-
-    ],
-    "publish_date": "2020-10-08",
-    "archived": false,
-    "publisher": "Uduekwe",
-    "cover_state": "good"
+    "archived": false
   }
 ]

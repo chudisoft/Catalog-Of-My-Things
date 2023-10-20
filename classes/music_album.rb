@@ -5,8 +5,8 @@ class MusicAlbum < Item
   attr_accessor :on_spotify
   attr_reader :title, :artist, :genre
 
-  def initialize(title, artist, release_date, _genre)
-    super(release_date)
+  def initialize(title, artist, release_date, id: 0)
+    super(release_date, id: id)
     @title = title
     @artist = artist
     @on_spotify = false

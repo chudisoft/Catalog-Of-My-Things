@@ -21,14 +21,24 @@ class Book < Item
   def to_json(*_args)
     {
       'id' => @id,
-      'genre' => @genre,
-      'author' => @author,
-      'source' => @source,
-      'label' => @label,
+      'title' => @title,
+      'author' => @author.map(&:to_json),
       'publish_date' => @publish_date,
-      'archived' => @archived,
       'publisher' => @publisher,
-      'cover_state' => @cover_state
+      'cover_state' => @cover_state,
+      'label' => @label.map(&:to_json),
+      'archived' => @archived
     }
   end
+end
+
+def to_json(*_args)
+  {
+    'id' => @id,
+    'publish_date' => @publish_date,
+    'publisher' => @publisher,
+    'cover_state' => @cover_state,
+    'label' => @label.map(&:to_json), # Ensure label is converted to JSON as well
+    'author' => @author.map(&:to_json) # Ensure author is converted to JSON as well
+  }.to_json
 end

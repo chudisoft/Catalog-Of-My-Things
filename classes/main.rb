@@ -35,39 +35,39 @@ class Main
     print_options
     option = gets.chomp.to_i
     @actions[option - 1].call
-    run unless option == 15
+    run unless option == 11
   end
 
   def actions
     [
-      -> { @create_models.create_item }, -> { move_to_archive },
-      -> { @list_all.list_all_books }, -> { @list_all.list_all_labels },
-      -> { @list_all.list_all_games }, -> { @list_all.list_all_authors },
-      -> { @list_all.list_all_genres }, -> { @list_all.list_all_albums },
-      -> { @create_models.add_book }, -> { @create_models.add_label },
-      -> { @create_models.add_genre }, -> { @create_models.add_music_album },
-      -> { @create_models.add_author }, -> { @create_models.add_game },
-      -> { quit }, -> { puts 'Invalid option. Please choose a valid option.' }
+      -> { move_to_archive },
+      -> { @list_all.list_all_books },
+      -> { @list_all.list_all_labels },
+      -> { @list_all.list_all_games },
+      -> { @list_all.list_all_authors },
+      -> { @list_all.list_all_genres },
+      -> { @list_all.list_all_albums },
+      -> { @create_models.add_book },
+      -> { @create_models.add_music_album },
+      -> { @create_models.add_game },
+      -> { quit },
+      -> { puts 'Invalid option. Please choose a valid option.' }
     ]
   end
 
   def print_options
     puts 'Options:'
-    puts '1. Create Item'
-    puts '2. Move Item to Archive'
-    puts '3. List all books'
-    puts '4. List all labels'
-    puts '5. List all games'
-    puts '6. List all authors'
-    puts '7. List all genres'
-    puts '8. List all albums'
-    puts '9. Add a book'
-    puts '10. Add a label'
-    puts '11. Add a genre'
-    puts '12. Add a music album'
-    puts '13. Add an author'
-    puts '14. Add a game'
-    puts '15. Quit'
+    puts '1. Move Item to Archive'
+    puts '2. List all books'
+    puts '3. List all labels'
+    puts '4. List all games'
+    puts '5. List all authors'
+    puts '6. List all genres'
+    puts '7. List all albums'
+    puts '8. Add a book'
+    puts '9. Add a music album'
+    puts '10. Add a game'
+    puts '11. Quit'
 
     print 'Choose an option: '
   end
@@ -104,7 +104,47 @@ class Main
 
   def quit
     puts 'Exiting the app.'
-    @running = false
+    save_all_music_albums
+  end
+
+  def save_book(book)
+    data_to_save = {
+      id: book.id,
+      title: book.title,
+      publisher: book.publisher,
+      cover_state: book.cover_state,
+      author: book.author.to_json
+    }
+
+    serialized_data = JSON.generate(data_to_save)
+    filename = "book_#{book.id}.json"
+
+    File.write(filename, serialized_data)
+
+    puts "Book with ID #{book.id} saved to #{filename}"
+  end
+
+  def save_all_music_albums
+    @music_albums.each do |music_album|
+      save_music_album(music_album)
+    end
+  end
+
+  def save_music_album(music_album)
+    data_to_save = {
+      id: music_album.id,
+      title: music_album.title,
+      artist: music_album.artist,
+      on_spotify: music_album.on_spotify,
+      genre: music_album.genre
+    }
+
+    serialized_data = JSON.generate(data_to_save)
+    filename = "music_album_#{music_album.id}.json"
+
+    File.write(filename, serialized_data)
+
+    puts "Music album with ID #{music_album.id} saved to #{filename}"
   end
 end
 

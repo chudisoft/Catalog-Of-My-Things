@@ -20,7 +20,7 @@ class Loader
       id = game_data['id']
       publish_date = Date.parse(game_data['publish_date'])
       multiplayer = game_data['multiplayer']
-      last_played_at = game_data['last_played_at']
+      last_played_at = Date.parse(game_data['last_played_at']) # Parse last_played_at as Date
       game = Game.new(publish_date, multiplayer, last_played_at, id: id)
       main.items << game
     end
@@ -59,7 +59,7 @@ class Loader
     genres_json.each do |genre_data|
       id = genre_data['id']
       name = genre_data['name']
-      genre = Genre.new(name, id: id)
+      genre = Genre.new(id, name) # Fix the order of arguments
       main.genres << genre
     end
   end
@@ -67,13 +67,15 @@ class Loader
   def load_music_albums(main)
     return unless File.exist?('json_data/music_album.json')
 
-    music_album_json = JSON.parse(File.read('json_data/music_album.json'))
-    music_album_json.each do |music_album_data|
+    music_albums_json = JSON.parse(File.read('json_data/music_album.json'))
+    music_albums_json.each do |music_album_data|
       title = music_album_data['title']
       artist = music_album_data['artist']
-      on_spotify = music_album_data['on_spotify']
-      genre = music_album_data['genre']
-      music_album = MusicAlbum.new(title, artist, on_spotify, genre)
+      music_album_data['on_spotify']
+      release_date = Date.parse(music_album_data['release_date']) # Read and parse the release date
+      genre = music_album_data['genre'] # Make sure the 'genre' data is present in the JSON
+      music_album = MusicAlbum.new(title, artist, release_date, genre: genre)
+      main.music_albums << music_album
       main.items << music_album
     end
   end

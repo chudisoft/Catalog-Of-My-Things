@@ -20,6 +20,12 @@ class CreateModels
     puts "Item created with ID: #{item.id}"
   end
 
+  def create_genre
+    puts 'Enter the genre name:'
+    genre_name = gets.chomp
+    Genre.new(0, genre_name)
+  end
+
   def save_games
     # Save games to a JSON file
     games_json = @main.items.select { |item| item.is_a?(Game) }.map(&:to_json)
@@ -61,10 +67,8 @@ class CreateModels
   end
 
   def save_books
-    # Save books to a JSON file
     books_json = @main.items.select { |item| item.is_a?(Book) }.map(&:to_json)
     File.write('json_data/books.json', JSON.pretty_generate(books_json))
-
     puts 'Books saved as JSON.'
   end
 
@@ -78,9 +82,30 @@ class CreateModels
 
     game = Game.new(publish_date, multiplayer, last_played_at)
     @main.instance_variable_get(:@items) << game
+
+    # Add labels to the game
+    print 'Enter label name for the game: '
+    label_name = gets.chomp
+    label = Label.new(label_name, 'label_color') # Modify as needed
+    game.add_label(label)
+
+    # Add genre to the game
+    print 'Enter genre name for the game: '
+    genre_name = gets.chomp
+    genre = Genre.new(0, genre_name) # Modify as needed
+    game.add_genre(genre)
+
+    # Add author to the game
+    print 'Enter author first_name for the game: '
+    first_name = gets.chomp
+    print 'Enter author last_name for the game: '
+    last_name = gets.chomp
+    author = Author.new(first_name, last_name)
+    game.add_author(author)
+
     puts '*******************************************************************'
     puts "Game added with ID: #{game.id}"
-    save_games
+    @main.save_games # Save the game with labels, genre, and author
     puts '*******************************************************************'
   end
 
@@ -108,6 +133,21 @@ class CreateModels
 
     book = Book.new(publish_date, publisher, cover_state)
     @main.items << book
+
+    # Add labels to the book
+    print 'Enter label name for the book: '
+    label_name = gets.chomp
+    label = Label.new(label_name, 'label_color') # Modify as needed
+    book.add_label(label)
+
+    # Add author to the book
+    print 'Enter author first_name for the book: '
+    first_name = gets.chomp
+    print 'Enter author last_name for the book: '
+    last_name = gets.chomp
+    author = Author.new(first_name, last_name)
+    book.add_author(author)
+
     puts '*******************************************************************'
     puts "Book added with ID: #{book.id}"
     save_books
@@ -130,19 +170,42 @@ class CreateModels
   def add_music_album
     print 'Enter the title of the music album: '
     title = gets.chomp
+
     print 'Enter the artist of the music album: '
     artist = gets.chomp
-    print 'Is the music album on Spotify? (true/false): '
-    on_spotify = gets.chomp.downcase == 'true'
-    print 'Enter the genre of the music album: '
-    genre = gets.chomp
 
-    music_album = MusicAlbum.new(title, artist, on_spotify, genre)
-    @main.items << music_album
+    print 'Is the music album on Spotify? (true/false): '
+    gets.chomp
+
+    print 'Enter the release date of the music album (YYYY-MM-DD): '
+    release_date = gets.chomp
+    publish_date = Date.parse(release_date)
+
+    print 'Enter label name for the music album: '
+    label_name = gets.chomp
+
+    # Add a color for the label
+    print 'Enter label color: '
+    label_color = gets.chomp
+
+    label = Label.new(label_name, label_color)
+
+    print 'Enter genre name for the music album: '
+    gets.chomp
+
+    # Create a new Genre object and add it to the music_album
+    genre = create_genre
+
+    music_album = MusicAlbum.new(title, artist, publish_date)
+    music_album.add_label(label)
+    music_album.add_genre(genre)
+
+    save_music_album
+
+    @music_albums << music_album
+
     puts '*******************************************************************'
     puts "Music Album added with ID: #{music_album.id}"
-    save_music_album
-    puts '*******************************************************************'
   end
 
   def add_label
