@@ -78,8 +78,10 @@ class CreateModels
 
     game = Game.new(publish_date, multiplayer, last_played_at)
     @main.instance_variable_get(:@items) << game
+    puts '*******************************************************************'
     puts "Game added with ID: #{game.id}"
     save_games
+    puts '*******************************************************************'
   end
 
   def add_author
@@ -90,8 +92,10 @@ class CreateModels
 
     author = Author.new(first_name, last_name)
     @main.authors << author
+    puts '*******************************************************************'
     puts "Author added: #{author.first_name} #{author.last_name}"
     save_authors
+    puts '*******************************************************************'
   end
 
   def add_book
@@ -104,8 +108,10 @@ class CreateModels
 
     book = Book.new(publish_date, publisher, cover_state)
     @main.items << book
+    puts '*******************************************************************'
     puts "Book added with ID: #{book.id}"
     save_books
+    puts '*******************************************************************'
   end
 
   def add_genre
@@ -114,8 +120,11 @@ class CreateModels
 
     genre = Genre.new(0, name)
     @main.genres << genre
+    puts '*******************************************************************'
     puts "Genre added with ID: #{genre.id}"
+    puts "Genre added with ID: #{genre.name}"
     save_genres
+    puts '*******************************************************************'
   end
 
   def add_music_album
@@ -130,8 +139,10 @@ class CreateModels
 
     music_album = MusicAlbum.new(title, artist, on_spotify, genre)
     @main.items << music_album
+    puts '*******************************************************************'
     puts "Music Album added with ID: #{music_album.id}"
     save_music_album
+    puts '*******************************************************************'
   end
 
   def add_label
@@ -142,7 +153,9 @@ class CreateModels
 
     label = Label.new(name, color)
     @labels << label
+    puts '*******************************************************************'
     puts "Label added: #{label.name}"
     save_labels
+    puts '*******************************************************************'
   end
 end
