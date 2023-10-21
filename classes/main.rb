@@ -16,7 +16,7 @@ class Main
 
   def initialize
     @authors = []
-    @items = []
+    @items = [] # Initialize @items as an empty array
     @music_albums = []
     @genres = []
     @labels = []
@@ -90,7 +90,7 @@ class Main
   end
 
   def move_to_archive
-    print 'Enter the ID of the item to move to archive: '
+    print 'Enter the ID of the item to move to the archive: '
     item_id = gets.chomp.to_i
     item = @items.find { |i| i.id == item_id }
 
@@ -107,27 +107,33 @@ class Main
     save_all_music_albums
   end
 
-  def save_book(book)
-    data_to_save = {
-      id: book.id,
-      title: book.title,
-      publisher: book.publisher,
-      cover_state: book.cover_state,
-      author: book.author.to_json
-    }
+  def add_game
+    print 'Enter publish date (YYYY-MM-DD): '
+    publish_date = Date.parse(gets.chomp)
+    print 'Is it multiplayer? (true/false): '
+    multiplayer = gets.chomp.downcase == 'true'
+    print 'Enter the date last played (YYYY-MM-DD): '
+    last_played_at = Date.parse(gets.chomp)
 
-    serialized_data = JSON.generate(data_to_save)
-    filename = "book_#{book.id}.json"
+    game = Game.new(publish_date, multiplayer, last_played_at)
+    @items << game # Append the game to the @items array
 
-    File.write(filename, serialized_data)
+    # Add author to the game
+    print 'Enter author first_name for the game: '
+    first_name = gets.chomp
+    print 'Enter author last_name for the game: '
+    last_name = gets.chomp
+    author = Author.new(first_name, last_name)
+    game.add_author(author)
 
-    puts "Book with ID #{book.id} saved to #{filename}"
+    puts '*******************************************************************'
+    puts "Game added with ID: #{game.id}"
+    # Removed the save_games method call
+    puts '*******************************************************************'
   end
 
   def save_all_music_albums
-    @music_albums.each do |music_album|
-      save_music_album(music_album)
-    end
+    @music_albums.each { |music_album| save_music_album(music_album) }
   end
 
   def save_music_album(music_album)

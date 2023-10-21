@@ -3,21 +3,35 @@
     "id": 149,
     "title": null,
     "author": [
-      {
-        "id": 33,
-        "first_name": "Wasswa",
-        "last_name": "Ashiraf",
-        "items": [
 
-        ]
-      }
     ],
     "publish_date": "2020-10-07",
     "publisher": "Fx",
     "cover_state": "good",
     "label": [
+
+    ],
+    "archived": false
+  },
+  {
+    "id": 14,
+    "title": null,
+    "author": [
       {
-        "name": "Forex",
+        "id": 174,
+        "first_name": "Arnold",
+        "last_name": "Nekemiah",
+        "items": [
+
+        ]
+      }
+    ],
+    "publish_date": "1998-08-07",
+    "publisher": "Arnold",
+    "cover_state": "bad",
+    "label": [
+      {
+        "name": "led",
         "color": "label_color",
         "items": [
 

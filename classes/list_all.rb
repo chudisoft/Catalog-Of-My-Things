@@ -21,6 +21,10 @@ class ListAll
 
         puts '*******************************************************************'
         puts "ID: #{item.id}, Multiplayer: #{item.multiplayer}, Last played at: #{item.last_played_at}"
+        # Include author information
+        item.author.each do |author|
+          puts "Author: #{author.first_name} #{author.last_name}"
+        end
         puts '*******************************************************************'
       end
     end

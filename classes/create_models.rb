@@ -9,6 +9,7 @@ require_relative 'music_album'
 class CreateModels
   def initialize(main)
     @main = main
+    @items = @main.items
     @music_albums = @main.items
   end
 
@@ -27,11 +28,10 @@ class CreateModels
   end
 
   def save_games
-    # Save games to a JSON file
-    games_json = @main.items.select { |item| item.is_a?(Game) }.map(&:to_json)
+    games_json = @items.select { |item| item.is_a?(Game) }.map(&:to_json)
     File.write('json_data/games.json', JSON.pretty_generate(games_json))
 
-    puts 'Games saved as JSON.'
+    puts 'Games saved as JSON. Debug message.'
   end
 
   def save_authors
@@ -81,19 +81,7 @@ class CreateModels
     last_played_at = Date.parse(gets.chomp)
 
     game = Game.new(publish_date, multiplayer, last_played_at)
-    @main.instance_variable_get(:@items) << game
-
-    # Add labels to the game
-    print 'Enter label name for the game: '
-    label_name = gets.chomp
-    label = Label.new(label_name, 'label_color') # Modify as needed
-    game.add_label(label)
-
-    # Add genre to the game
-    print 'Enter genre name for the game: '
-    genre_name = gets.chomp
-    genre = Genre.new(0, genre_name) # Modify as needed
-    game.add_genre(genre)
+    @items << game
 
     # Add author to the game
     print 'Enter author first_name for the game: '
@@ -102,10 +90,11 @@ class CreateModels
     last_name = gets.chomp
     author = Author.new(first_name, last_name)
     game.add_author(author)
-
+    # Save the game with author information
+    save_games
     puts '*******************************************************************'
     puts "Game added with ID: #{game.id}"
-    @main.save_games # Save the game with labels, genre, and author
+
     puts '*******************************************************************'
   end
 
