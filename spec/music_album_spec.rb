@@ -6,7 +6,7 @@ describe MusicAlbum do
   let(:artist) { 'Artist Name' }
   let(:release_date) { Date.new(2010, 1, 1) }
   let(:genre) { double('genre') }
-  let(:music_album) { MusicAlbum.new(title, artist, release_date, genre) }
+  let(:music_album) { MusicAlbum.new(title, artist, release_date) }
 
   it 'inherits from Item' do
     expect(MusicAlbum.superclass).to eq(Item)
