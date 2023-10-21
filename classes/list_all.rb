@@ -19,13 +19,11 @@ class ListAll
       @main.items.each do |item|
         next unless item.is_a?(Game)
 
-        puts '*******************************************************************'
         puts "ID: #{item.id}, Multiplayer: #{item.multiplayer}, Last played at: #{item.last_played_at}"
         # Include author information
         item.author.each do |author|
           puts "Author: #{author.first_name} #{author.last_name}"
         end
-        puts '*******************************************************************'
       end
     end
   end
@@ -36,9 +34,7 @@ class ListAll
     else
       puts 'List of all books:'
       @main.items.each do |item|
-        puts '*******************************************************************'
         puts "ID: #{item.id}, Publisher: #{item.publisher}, Cover State: #{item.cover_state}" if item.is_a?(Book)
-        puts '*******************************************************************'
       end
     end
   end

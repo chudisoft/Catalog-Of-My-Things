@@ -22,7 +22,6 @@ class Book < Item
     {
       'id' => @id,
       'title' => @title,
-      'author' => @author.map(&:to_json),
       'publish_date' => @publish_date,
       'publisher' => @publisher,
       'cover_state' => @cover_state,

@@ -22,7 +22,7 @@ class MusicAlbum < Item
       'title' => @title,
       'artist' => @artist,
       'on_spotify' => @on_spotify,
-      'genre' => @genre.to_json
+      'genre' => @genre.map(&:to_json)
     }
   end
 

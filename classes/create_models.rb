@@ -60,10 +60,9 @@ class CreateModels
   end
 
   def save_music_album
-    music_albums_json = @music_albums.select { |item| item.is_a?(MusicAlbum) }.map(&:to_json)
-    File.write('json_data/music_album.json', JSON.pretty_generate(music_albums_json))
-
-    puts 'Music Albums saved as JSON.'
+    music_json = @main.items.select { |item| item.is_a?(MusicAlbum) }.map(&:to_json)
+    File.write('json_data/music.json', JSON.pretty_generate(music_json))
+    puts 'Music info saved as JSON.'
   end
 
   def save_books
@@ -126,16 +125,8 @@ class CreateModels
     # Add labels to the book
     print 'Enter label name for the book: '
     label_name = gets.chomp
-    label = Label.new(label_name, 'label_color') # Modify as needed
+    label = Label.new(label_name, 'label_color')
     book.add_label(label)
-
-    # Add author to the book
-    print 'Enter author first_name for the book: '
-    first_name = gets.chomp
-    print 'Enter author last_name for the book: '
-    last_name = gets.chomp
-    author = Author.new(first_name, last_name)
-    book.add_author(author)
 
     puts '*******************************************************************'
     puts "Book added with ID: #{book.id}"
@@ -162,38 +153,26 @@ class CreateModels
 
     print 'Enter the artist of the music album: '
     artist = gets.chomp
-
     print 'Is the music album on Spotify? (true/false): '
-    gets.chomp
+    on_spotify = gets.chomp.downcase == 'true'
 
     print 'Enter the release date of the music album (YYYY-MM-DD): '
-    release_date = gets.chomp
-    publish_date = Date.parse(release_date)
-
-    print 'Enter label name for the music album: '
-    label_name = gets.chomp
-
-    # Add a color for the label
-    print 'Enter label color: '
-    label_color = gets.chomp
-
-    label = Label.new(label_name, label_color)
+    release_date = Date.parse(gets.chomp)
 
     print 'Enter genre name for the music album: '
-    gets.chomp
+    genre_name = gets.chomp
 
     # Create a new Genre object and add it to the music_album
-    genre = create_genre
+    genre = Genre.new(0, genre_name)
 
-    music_album = MusicAlbum.new(title, artist, publish_date)
+    music_album = MusicAlbum.new(title, artist, release_date)
+    music_album.on_spotify = on_spotify
     music_album.add_label(label)
     music_album.add_genre(genre)
 
+    @main.items << music_album
+    # Save the music album
     save_music_album
-
-    @music_albums << music_album
-
-    puts '*******************************************************************'
     puts "Music Album added with ID: #{music_album.id}"
   end
 
@@ -202,7 +181,6 @@ class CreateModels
     name = gets.chomp
     print 'Enter label color: '
     color = gets.chomp
-
     label = Label.new(name, color)
     @main.labels << label
     puts '*******************************************************************'

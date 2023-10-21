@@ -2,9 +2,6 @@
   {
     "id": 149,
     "title": null,
-    "author": [
-
-    ],
     "publish_date": "2020-10-07",
     "publisher": "Fx",
     "cover_state": "good",
@@ -16,18 +13,19 @@
   {
     "id": 14,
     "title": null,
-    "author": [
-      {
-        "id": 174,
-        "first_name": "Arnold",
-        "last_name": "Nekemiah",
-        "items": [
-
-        ]
-      }
-    ],
     "publish_date": "1998-08-07",
     "publisher": "Arnold",
+    "cover_state": "bad",
+    "label": [
+
+    ],
+    "archived": false
+  },
+  {
+    "id": 165,
+    "title": null,
+    "publish_date": "2020-10-09",
+    "publisher": "Uduekwe",
     "cover_state": "bad",
     "label": [
       {
